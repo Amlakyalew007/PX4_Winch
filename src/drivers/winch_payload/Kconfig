@@ -1,0 +1,7 @@
+menuconfig DRIVERS_WINCH_PAYLOAD
+    bool "winch_payload"
+    default n
+    ---help---
+        Enable support for Payload-50/80 Winch Driver
+        This driver provides integration for winch-based payload delivery systems,
+        supporting commands like ascent, descent, and hook control.

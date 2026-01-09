@@ -566,4 +566,4 @@ MavlinkStream *create_mavlink_stream(const uint16_t msg_id, Mavlink *mavlink)
 	}
 
 	return nullptr;
-}
+};

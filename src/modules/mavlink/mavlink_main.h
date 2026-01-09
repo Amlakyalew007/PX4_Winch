@@ -111,6 +111,9 @@ class Mavlink final : public ModuleParams
 public:
 	Mavlink();
 	~Mavlink();
+        float get_winch_streaming_rate() const { return _winch_streaming_rate; }
+        void set_winch_streaming_rate(float rate) {
+	_winch_streaming_rate = math::constrain(rate, 0.0f, 50.0f); }
 
 	static int start(int argc, char *argv[]);
 
@@ -717,4 +720,7 @@ private:
 	// Disallow copy construction and move assignment.
 	Mavlink(const Mavlink &) = delete;
 	Mavlink operator=(const Mavlink &) = delete;
+
+  // Winch streaming rate control
+    float _winch_streaming_rate{5.0f};  // Default 5 Hz
 };

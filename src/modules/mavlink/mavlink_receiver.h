@@ -42,7 +42,7 @@
  */
 
 #pragma once
-#include <uORB/topics/winch_control.h>
+
 #include "mavlink_ftp.h"
 #include "mavlink_log_handler.h"
 #include "mavlink_mission.h"
@@ -58,6 +58,7 @@
 #include <lib/systemlib/mavlink_log.h>
 #include <px4_platform_common/module_params.h>
 #include <uORB/topics/winch_control.h>
+#include <uORB/topics/winch_status.h>
 #include <uORB/Publication.hpp>
 #include <uORB/Publication.hpp>
 #include <uORB/PublicationMulti.hpp>
@@ -144,7 +145,10 @@ private:
 	static void *start_trampoline(void *context);
 	void run();
 
-
+        // Winch status streaming
+        void send_winch_status();
+        hrt_abstime _last_winch_status_sent{0};
+        uORB::Subscription _winch_status_sub{ORB_ID(winch_status)};
 
 	void acknowledge(uint8_t sysid, uint8_t compid, uint16_t command, uint8_t result, uint8_t progress = 0);
 

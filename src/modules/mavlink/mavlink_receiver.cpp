@@ -43,7 +43,8 @@
 #include <lib/airspeed/airspeed.h>
 #include <lib/conversion/rotation.h>
 #include <lib/systemlib/px4_macros.h>
-
+//#include <uORB/topics/winch_control.h>
+//#include <uORB/topics/winch_status.h>
 #include <math.h>
 #include <poll.h>
 
@@ -120,8 +121,11 @@ MavlinkReceiver::MavlinkReceiver(Mavlink &parent) :
 void
 MavlinkReceiver::handle_message_winch_control_custom(mavlink_message_t *msg)
 {
-    mavlink_winch_control_custom_t mavlink_winch_ctrl;
-    mavlink_msg_winch_control_custom_decode(msg, &mavlink_winch_ctrl);
+    mavlink_custom_winch_control_t mavlink_winch_ctrl;
+    mavlink_msg_custom_winch_control_decode(msg, &mavlink_winch_ctrl);
+    // Get the sender's system and component IDs for logging
+    //const uint8_t sys_id = msg->sysid;
+    //const uint8_t comp_id = msg->compid;
 
     winch_control_s winch_control{};
     winch_control.timestamp = hrt_absolute_time();
@@ -138,8 +142,14 @@ MavlinkReceiver::handle_message_winch_control_custom(mavlink_message_t *msg)
     winch_control.calibration_factor = mavlink_winch_ctrl.calibration_factor;
     winch_control.target_address = mavlink_winch_ctrl.target_address;
     winch_control.priority = mavlink_winch_ctrl.priority;
+      // Log the received command
+    PX4_INFO("Winch control received: cmd=%d, hook=%d, target=0x%02X, priority=%d",
+             winch_control.command, winch_control.release_hook,
+             winch_control.target_address, winch_control.priority);
 
+        // publish to UORB
     _winch_control_pub.publish(winch_control);
+
 }
 
 void
@@ -347,7 +357,7 @@ MavlinkReceiver::handle_message(mavlink_message_t *msg)
 	case MAVLINK_MSG_ID_GIMBAL_DEVICE_ATTITUDE_STATUS:
 		handle_message_gimbal_device_attitude_status(msg);
 		break;
-	case MAVLINK_MSG_ID_WINCH_CONTROL_CUSTOM:
+	case MAVLINK_MSG_ID_CUSTOM_WINCH_CONTROL:
                 handle_message_winch_control_custom(msg);
                 break;
 

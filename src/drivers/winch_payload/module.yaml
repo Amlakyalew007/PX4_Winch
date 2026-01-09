@@ -1,0 +1,60 @@
+module_name: winch_payload
+
+parameters:
+    - group: Winch
+      definitions:
+          WINCH_EN:
+              description:
+                  short: Winch Enable
+              type: int32
+              default: 0
+              min: 0
+              max: 1
+
+          WINCH_ADDR:
+              description:
+                  short: Winch Address
+              type: int32
+              default: 1
+              min: 1
+              max: 255
+
+          WINCH_MODE:
+              description:
+                  short: Winch Mode
+              type: int32
+              default: 1
+              min: 0
+              max: 1
+
+          WINCH_SIM:
+              description:
+                  short: Winch Simulation
+              type: int32
+              default: 0
+              min: 0
+              max: 1
+
+          WINCH_SIM_RT:
+              description:
+                  short: Winch Sim Rate
+              type: int32
+              default: 10
+              min: 1
+              max: 50
+
+          WINCH_LOG:
+              description:
+                  short: Winch Logging
+              type: int32
+              default: 1
+              min: 0
+              max: 1
+
+          WINCH_STREAM_RT:
+              description:
+                  short: mavlink winch status stream rate
+              type: float
+              default: 5.0
+              min: 0.0
+              max: 50.0

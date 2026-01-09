@@ -201,6 +201,13 @@ Mavlink::mavlink_update_parameters()
 		_param_mav_type.commit_no_notification();
 		PX4_ERR("MAV_TYPE parameter invalid, resetting to 0.");
 	}
+         // Winch streaming rate parameter
+        param_t winch_stream_rate_param = param_find("WINCH_STRM_RT");
+        if (winch_stream_rate_param != PARAM_INVALID) {
+        float rate;
+        param_get(winch_stream_rate_param, &rate);
+        set_winch_streaming_rate(rate);
+        }
 }
 
 bool Mavlink::set_channel()

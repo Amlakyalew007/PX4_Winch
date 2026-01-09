@@ -170,6 +170,7 @@ void LoggedTopics::add_default_topics()
 	add_topic_multi("timesync_status", 1000, 3);
 	add_optional_topic_multi("telemetry_status", 1000, 4);
 
+
 	// EKF multi topics
 	{
 		// optionally log all estimator* topics at minimal rate
@@ -227,6 +228,8 @@ void LoggedTopics::add_default_topics()
 		add_topic("vehicle_global_position_groundtruth", 100);
 		add_topic("vehicle_local_position_groundtruth", 20);
 	}
+	add_topic("winch_status", 100);     // Log at max 10 Hz (100ms interval)
+        add_topic("winch_control", 0);     // Log every update (0 = no rate limit)
 
 #ifdef CONFIG_ARCH_BOARD_PX4_SITL
 	add_topic("fw_virtual_attitude_setpoint");

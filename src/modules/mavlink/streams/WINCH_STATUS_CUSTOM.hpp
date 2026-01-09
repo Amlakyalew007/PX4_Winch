@@ -14,7 +14,7 @@ public:
     }
 
     static constexpr const char *get_name_static() { return "WINCH_STATUS_CUSTOM"; }
-    static constexpr uint16_t get_id_static() { return MAVLINK_MSG_ID_WINCH_STATUS_CUSTOM; }
+    static constexpr uint16_t get_id_static() { return MAVLINK_MSG_ID_CUSTOM_WINCH_STATUS; }
 
     const char *get_name() const override { return get_name_static(); }
     uint16_t get_id() override { return get_id_static(); }
@@ -22,7 +22,7 @@ public:
     unsigned get_size() override
     {
         return _winch_status_sub.advertised() ?
-               MAVLINK_MSG_ID_WINCH_STATUS_CUSTOM_LEN + MAVLINK_NUM_NON_PAYLOAD_BYTES : 0;
+               MAVLINK_MSG_ID_CUSTOM_WINCH_STATUS_LEN + MAVLINK_NUM_NON_PAYLOAD_BYTES : 0;
     }
 
 private:
@@ -35,7 +35,7 @@ private:
         winch_status_s status;
 
         if (_winch_status_sub.update(&status)) {
-            mavlink_winch_status_custom_t msg{};
+            mavlink_custom_winch_status_t msg{};
 
             msg.timestamp = status.timestamp;
             msg.device_address = status.device_address;
@@ -69,7 +69,7 @@ private:
             msg.system_healthy = status.system_healthy;
             msg.comm_link_status = status.comm_link_status;
 
-            mavlink_msg_winch_status_custom_send_struct(_mavlink->get_channel(), &msg);
+            mavlink_msg_custom_winch_status_send_struct(_mavlink->get_channel(), &msg);
             return true;
         }
 

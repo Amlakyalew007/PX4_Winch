@@ -673,7 +673,7 @@ unset SDCARD_EXT_PATH
 unset SDCARD_FORMAT
 unset STARTUP_TUNE
 unset VEHICLE_TYPE
-
+mavlink stream -r 5.0 -s CUSTOM_WINCH_STATUS -d /dev/ttyS5
 #
 # Boot is complete, inform MAVLink app(s) that the system is now fully up and running.
 #
