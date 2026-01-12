@@ -1,19 +1,19 @@
-#ifndef WINCH_STATUS_CUSTOM_HPP
-#define WINCH_STATUS_CUSTOM_HPP
+#ifndef CUSTOM_WINCH_STATUS_HPP
+#define CUSTOM_WINCH_STATUS_HPP
 
-#include "../mavlink_stream.h"
 #include <uORB/topics/winch_status.h>
 #include <uORB/Subscription.hpp>
 
-class MavlinkStreamWinchStatusCustom : public MavlinkStream
+class MavlinkStreamCustomWinchStatus : public MavlinkStream
 {
 public:
     static MavlinkStream *new_instance(Mavlink *mavlink)
     {
-        return new MavlinkStreamWinchStatusCustom(mavlink);
+        return new MavlinkStreamCustomWinchStatus(mavlink);
     }
 
-    static constexpr const char *get_name_static() { return "WINCH_STATUS_CUSTOM"; }
+    // IMPORTANT: This name must match exactly what you use in the mavlink stream command
+    static constexpr const char *get_name_static() { return "CUSTOM_WINCH_STATUS"; }
     static constexpr uint16_t get_id_static() { return MAVLINK_MSG_ID_CUSTOM_WINCH_STATUS; }
 
     const char *get_name() const override { return get_name_static(); }
@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    explicit MavlinkStreamWinchStatusCustom(Mavlink *mavlink) : MavlinkStream(mavlink) {}
+    explicit MavlinkStreamCustomWinchStatus(Mavlink *mavlink) : MavlinkStream(mavlink) {}
 
     uORB::Subscription _winch_status_sub{ORB_ID(winch_status)};
 
@@ -37,6 +37,7 @@ private:
         if (_winch_status_sub.update(&status)) {
             mavlink_custom_winch_status_t msg{};
 
+            // Map uORB fields to MAVLink message
             msg.timestamp = status.timestamp;
             msg.device_address = status.device_address;
             msg.device_id = status.device_id;
@@ -77,4 +78,4 @@ private:
     }
 };
 
-#endif // WINCH_STATUS_CUSTOM_HPP
+#endif // CUSTOM_WINCH_STATUS_HPP

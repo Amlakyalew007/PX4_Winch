@@ -60,7 +60,7 @@
 #include <uORB/topics/winch_control.h>
 #include <uORB/topics/winch_status.h>
 #include <uORB/Publication.hpp>
-#include <uORB/Publication.hpp>
+
 #include <uORB/PublicationMulti.hpp>
 #include <uORB/SubscriptionInterval.hpp>
 #include <uORB/topics/actuator_armed.h>
@@ -162,7 +162,7 @@ private:
 	uint8_t handle_request_message_command(uint16_t message_id, float param2 = 0.0f, float param3 = 0.0f,
 					       float param4 = 0.0f, float param5 = 0.0f, float param6 = 0.0f, float param7 = 0.0f);
 
-	void handle_message_winch_control_custom(mavlink_message_t *msg);
+	void handle_message_custom_winch_control(mavlink_message_t *msg);
 	void handle_message(mavlink_message_t *msg);
 	void handle_messages_in_gimbal_mode(mavlink_message_t &msg);
 

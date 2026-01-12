@@ -58,7 +58,7 @@
 #include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/vehicle_status.h>
 
-#include "streams/WINCH_STATUS_CUSTOM.hpp"
+#include "streams/CUSTOM_WINCH_STATUS.hpp"
 #include "streams/ACTUATOR_OUTPUT_STATUS.hpp"
 #include "streams/ALTITUDE.hpp"
 #include "streams/ATTITUDE.hpp"
@@ -525,8 +525,8 @@ static const StreamListItem streams_list[] = {
 #if defined(GLOBAL_POSITION_HPP)
 	create_stream_list_item<MavlinkStreamGLobalPosition>(),
 #endif // GLOBAL_POSITION_HPP
-#if defined(WINCH_STATUS_CUSTOM_HPP)
-    create_stream_list_item<MavlinkStreamWinchStatusCustom>(),
+#if defined(CUSTOM_WINCH_STATUS_HPP)
+    create_stream_list_item<MavlinkStreamCustomWinchStatus>(),
 #endif
 };
 
